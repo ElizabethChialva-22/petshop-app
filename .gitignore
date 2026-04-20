@@ -1,0 +1,16 @@
+# Node (Angular)
+Frontend/node_modules/
+Frontend/dist/
+
+# Python (Django)
+Backend/__pycache__/
+Backend/*.pyc
+Backend/db.sqlite3
+
+# Env files
+.env
+.env_modelo
+
+# IDE
+.vscode/
+.idea/

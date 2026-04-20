@@ -13,7 +13,12 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "ES2022",
+<<<<<<< HEAD
     "module": "preserve"
+=======
+    "module": "preserve",
+    
+>>>>>>> 1a8d901e4ead7348c2de197f9ab1060d5ccca9c6
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

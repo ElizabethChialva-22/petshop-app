@@ -1,27 +1,43 @@
 {
+<<<<<<< HEAD
   "name": "petshop",
+=======
+  "name": "frontend-temp",
+>>>>>>> 1a8d901e4ead7348c2de197f9ab1060d5ccca9c6
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
+<<<<<<< HEAD
     "test": "ng test",
     "serve:ssr:petshop": "node dist/petshop/server/server.mjs"
   },
   "private": true,
   "packageManager": "npm@11.12.1",
+=======
+    "test": "ng test"
+  },
+  "private": true,
+  "packageManager": "npm@10.8.2",
+>>>>>>> 1a8d901e4ead7348c2de197f9ab1060d5ccca9c6
   "dependencies": {
     "@angular/common": "^21.2.0",
     "@angular/compiler": "^21.2.0",
     "@angular/core": "^21.2.0",
     "@angular/forms": "^21.2.0",
     "@angular/platform-browser": "^21.2.0",
+<<<<<<< HEAD
     "@angular/platform-server": "^21.2.0",
     "@angular/router": "^21.2.0",
     "@angular/ssr": "^21.2.7",
     "bootstrap": "^5.3.8",
     "express": "^5.1.0",
+=======
+    "@angular/router": "^21.2.0",
+    "bootstrap": "^5.3.8",
+>>>>>>> 1a8d901e4ead7348c2de197f9ab1060d5ccca9c6
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
@@ -29,8 +45,11 @@
     "@angular/build": "^21.2.7",
     "@angular/cli": "^21.2.7",
     "@angular/compiler-cli": "^21.2.0",
+<<<<<<< HEAD
     "@types/express": "^5.0.1",
     "@types/node": "^20.17.19",
+=======
+>>>>>>> 1a8d901e4ead7348c2de197f9ab1060d5ccca9c6
     "jsdom": "^28.0.0",
     "prettier": "^3.8.1",
     "typescript": "~5.9.2",
