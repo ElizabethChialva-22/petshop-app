@@ -7,7 +7,7 @@ Proyecto grupal para el módulo "programador web" de la tecnicatura en desarroll
 * ELIZABETH NORMA J. CHIALVA  | http://github.com/ElizabethChialva-22
 * LAURA MOLINA  | http://github.com/lauritam7
 * ADRIAN NICOLAS TELLO  | http://github.com/ANIKO4
-* MATIAS IBARRA  | http://github.com/MatiasRaulIbarrai
+* MATIAS IBARRA  | http://github.com/MatiasRaulIbarra
 * FRANCISCO JUNCO  | http://github.com/FranJL075
 
 ## 💻 Descripción del proyecto
