@@ -1,0 +1,17 @@
+asgiref==3.11.1
+blinker==1.9.0
+click==8.2.1
+colorama==0.4.6
+Django==6.0.4
+django-environ==0.13.0
+djangorestframework==3.17.1
+Flask==3.1.1
+flask-cors==6.0.1
+itsdangerous==2.2.0
+Jinja2==3.1.6
+MarkupSafe==3.0.2
+mysql-connector-python==9.3.0
+mysqlclient==2.2.8
+sqlparse==0.5.5
+tzdata==2026.1
+Werkzeug==3.1.3
