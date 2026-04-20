@@ -1,14 +1,14 @@
-/* 🌈 Fondo general */
+/*  Fondo general */
 body {
   background-color: #f5f7fa;
 }
 
-/* 🧭 Navbar */
+/*  Navbar */
 .navbar {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* 🚀 HERO */
+/*  HERO */
 .hero {
   padding: 80px 20px;
   background: linear-gradient(135deg, #4e73df, #1cc88a);
@@ -34,7 +34,7 @@ body {
   background-color: #ff5722;
 }
 
-/* 📦 FEATURES */
+/*  FEATURES */
 .row .col-md-4 {
   background: white;
   padding: 20px;
@@ -48,12 +48,12 @@ body {
   transform: translateY(-5px);
 }
 
-/* 📞 CONTACTO */
+/*  CONTACTO */
 input, textarea {
   border-radius: 8px;
 }
 
-/* 👣 FOOTER */
+/* FOOTER */
 footer {
   margin-top: 50px;
 }
