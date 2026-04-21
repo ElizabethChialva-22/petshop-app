@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "@types/express": "^5.0.6"
+  },
+  "dependencies": {
+    "boostrap": "^2.0.0",
+    "tslib": "^2.8.1"
+  }
+}
