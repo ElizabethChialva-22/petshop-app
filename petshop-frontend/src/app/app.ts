@@ -1,14 +1,12 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { Footer } from "./shared/footer/footer";
-import { Header } from "./shared/header/header";
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { QuienesSomosComponent } from './components\quienes-somos/quienes-somos';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Footer, Header],
+  standalone: true,
+  imports: [CommonModule, QuienesSomosComponent], 
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
-  protected readonly title = signal('frontend-temp');
-}
+export class AppComponent { }
