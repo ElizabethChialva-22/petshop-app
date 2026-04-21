@@ -1,5 +1,5 @@
 # 🐾 Programador web - Sistema de Gestión - PetShop App
-Proyecto grupal para el módulo "programador web" de la tecnicatura en desarrollo web y aplicaciones digitales del ISPC . Está compuesto por tres espacios curriculares: Introducción a la Programación Web II, Programación II y Desarrollo de Software.
+Proyecto grupal para el módulo "programador web" de la tecnicatura en desarrollo web y aplicaciones digitales del ISPC . Está compuesto por tres espacios curriculares: Programación Web II, Programación II y Desarrollo de Software.
 
 ## 👥 Equipo de Desarrollo
 * LAUTARO NAHUEL ANCILLOTTI   | http://github.com/lnancillotti
