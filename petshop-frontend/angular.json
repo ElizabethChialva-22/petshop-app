@@ -2,15 +2,12 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": false
   },
   "newProjectRoot": "projects",
   "projects": {
-<<<<<<< HEAD
     "petshop": {
-=======
-    "frontend-temp": {
->>>>>>> 1a8d901e4ead7348c2de197f9ab1060d5ccca9c6
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -29,23 +26,9 @@
               }
             ],
             "styles": [
-<<<<<<< HEAD
-             "node_modules/bootstrap/dist/css/bootstrap.min.css",
-             "src/styles.css"
-            ],
-            "server": "src/main.server.ts",
-            "outputMode": "server",
-            "security": {
-              "allowedHosts": []
-            },
-            "ssr": {
-              "entry": "src/server.ts"
-            }
-=======
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ]
->>>>>>> 1a8d901e4ead7348c2de197f9ab1060d5ccca9c6
           },
           "configurations": {
             "production": {
@@ -75,17 +58,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-<<<<<<< HEAD
               "buildTarget": "petshop:build:production"
             },
             "development": {
               "buildTarget": "petshop:build:development"
-=======
-              "buildTarget": "frontend-temp:build:production"
-            },
-            "development": {
-              "buildTarget": "frontend-temp:build:development"
->>>>>>> 1a8d901e4ead7348c2de197f9ab1060d5ccca9c6
             }
           },
           "defaultConfiguration": "development"
