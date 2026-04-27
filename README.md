@@ -46,3 +46,10 @@ Muchos dueños de mascotas enfrentan dificultades para organizar las vacunas, tu
 2. Instalar dependencias: `npm install`.
 3. Ejecutar servidor: `ng serve -o`.
 
+🤝 Metodología de Trabajo
+
+El desarrollo del proyecto se realizó de forma colaborativa, utilizando control de versiones con Git y GitHub, distribución de tareas por módulos y reuniones periódicas para seguimiento del avance, integración y pruebas generales del sistema.
+
+✅ Estado del Proyecto
+
+Actualmente la aplicación se encuentra en fase funcional inicial, cumpliendo con los requerimientos planteados en la primera etapa, con posibilidad de continuar escalando nuevas funcionalidades en futuras evidencias o versiones.
