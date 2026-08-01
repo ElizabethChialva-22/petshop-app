@@ -61,3 +61,53 @@ ul {
   text-align: center;
   padding: 1rem;
 }
+
+.imagen-mascotas {
+  width: 90%;
+  height: 170px;
+  object-fit: cover;
+  margin: 10px auto;
+  display: block;
+}
+
+.imagen-productos {
+  width: 90%;
+  height: 170px;
+  object-fit: cover;
+  margin: 10px auto;
+  display: block;
+}
+
+.imagen-registro {
+  width: 90%;
+  height: 170px;
+  object-fit: cover;
+  margin: 10px auto;
+  display: block;
+}
+
+.imagen-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 80px; /* separación entre íconos */
+  flex-wrap: nowrap;
+}
+
+.imagen-historial {
+  text-align: center;
+  width: 150px;
+}
+
+.imagen-historial img {
+  width: 70px;   /* tamaño del dibujo */
+  height: 70px;
+  object-fit: contain;
+  margin-bottom: 15px;
+}
+.imagen-historial {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
+}

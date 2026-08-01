@@ -74,3 +74,12 @@ class Producto(models.Model):
     stock = models.IntegerField()
     id_categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, related_name='productos')
     imagen = models.URLField(blank=True, null=True)
+
+class Contacto(models.Model):
+    id_contacto = models.AutoField(primary_key=True)
+    email = models.EmailField()
+    mensaje = models.TextField()
+    fecha = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.email

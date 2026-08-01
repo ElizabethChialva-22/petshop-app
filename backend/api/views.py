@@ -9,6 +9,9 @@ from rest_framework.views import APIView
 from .models import Usuario, Mascota, Turno, Vacunacion, Vacuna, Categoria, Producto
 from .serializers import (UsuarioSerializer, MascotaSerializer, TurnoSerializer,
                           VacunacionSerializer, VacunaSerializer, CategoriaSerializer, ProductoSerializer)
+from rest_framework import generics
+from .models import Contacto
+from .serializers import ContactoSerializer                          
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -225,3 +228,6 @@ class TurnosPorMascotaView(APIView):
             serializer.save()
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
+class ContactoCreateView(generics.CreateAPIView):
+    queryset = Contacto.objects.all()
+    serializer_class = ContactoSerializer        
