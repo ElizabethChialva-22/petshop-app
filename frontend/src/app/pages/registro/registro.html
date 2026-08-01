@@ -12,11 +12,16 @@
           <div class="alert alert-success text-center py-2">{{ exitoMsg }}</div>
         }
 
-        <form [formGroup]="form" (ngSubmit)="onEnviar($event)">
+        <form [formGroup]="form" (ngSubmit)="onEnviar($event)" autocomplete="off">
 
           <div class="mb-3">
             <label class="form-label">Nombre completo</label>
-            <input type="text" formControlName="nombre" class="form-control" placeholder="Ej: Juan Perez">
+            <input
+              type="text"
+              formControlName="nombre"
+              class="form-control"
+              placeholder="Ej: Juan Perez"
+              autocomplete="name">
             @if (Nombre?.errors && Nombre?.touched) {
               @if (Nombre?.hasError('required')) {
                 <p class="text-danger small mt-1">El nombre es requerido.</p>
@@ -32,7 +37,12 @@
 
           <div class="mb-3">
             <label class="form-label">Correo electrónico</label>
-            <input type="email" formControlName="email" class="form-control" placeholder="nombre@ejemplo.com">
+            <input
+              type="email"
+              formControlName="email"
+              class="form-control"
+              placeholder="nombre@ejemplo.com"
+              autocomplete="email">
             @if (Email?.errors && Email?.touched) {
               @if (Email?.hasError('required')) {
                 <p class="text-danger small mt-1">El email es requerido.</p>
@@ -45,7 +55,12 @@
 
           <div class="mb-3">
             <label class="form-label">Teléfono</label>
-            <input type="text" formControlName="telefono" class="form-control" placeholder="Ej: 3512345678">
+            <input
+              type="text"
+              formControlName="telefono"
+              class="form-control"
+              placeholder="Ej: 3512345678"
+              autocomplete="tel">
             @if (Telefono?.errors && Telefono?.touched) {
               @if (Telefono?.hasError('required')) {
                 <p class="text-danger small mt-1">El teléfono es requerido.</p>
@@ -60,18 +75,28 @@
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Dirección de envío</label>
-            <input type="text" formControlName="direccion" class="form-control" placeholder="Ej: Av. Colón 123">
+            <label class="form-label">Dirección</label>
+            <input
+              type="text"
+              formControlName="direccion"
+              class="form-control"
+              placeholder="Ej: Av. Siempreviva 742"
+              autocomplete="street-address">
             @if (Direccion?.errors && Direccion?.touched) {
               @if (Direccion?.hasError('required')) {
-                <p class="text-danger small mt-1">La dirección es requerida para el perfil.</p>
+                <p class="text-danger small mt-1">La dirección es requerida.</p>
               }
             }
           </div>
 
           <div class="mb-3">
             <label class="form-label">Contraseña</label>
-            <input type="password" formControlName="contrasena" class="form-control" placeholder="Mínimo 8 caracteres">
+            <input
+              type="password"
+              formControlName="contrasena"
+              class="form-control"
+              placeholder="Mínimo 8 caracteres"
+              autocomplete="new-password">
             @if (Contrasena?.errors && Contrasena?.touched) {
               @if (Contrasena?.hasError('required')) {
                 <p class="text-danger small mt-1">La contraseña es requerida.</p>
@@ -84,7 +109,12 @@
 
           <div class="mb-3">
             <label class="form-label">Confirmar contraseña</label>
-            <input type="password" formControlName="confirmarContrasena" class="form-control" placeholder="Repetir contraseña">
+            <input
+              type="password"
+              formControlName="confirmarContrasena"
+              class="form-control"
+              placeholder="Repetir contraseña"
+              autocomplete="new-password">
             @if (ConfirmarContrasena?.errors && ConfirmarContrasena?.touched) {
               @if (ConfirmarContrasena?.hasError('required')) {
                 <p class="text-danger small mt-1">Debe confirmar la contraseña.</p>

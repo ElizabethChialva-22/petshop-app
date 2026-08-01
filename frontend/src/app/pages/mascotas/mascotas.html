@@ -1,84 +1,79 @@
 <div class="container mt-4">
 
-  <!-- FORMULARIO: solo admin y veterinario -->
-  @if (role === 'admin' || role === 'veterinario') {
-    <div class="card mb-4">
-      <div class="card-header">
-        <h5 class="mb-0">{{ editandoId ? 'Editar mascota' : 'Registrar mascota' }}</h5>
-      </div>
-      <div class="card-body">
-        <form [formGroup]="form" (ngSubmit)="onEnviar($event)">
-          <div class="row g-3">
-
-            <div class="col-md-6">
-              <label class="form-label">Nombre *</label>
-              <input formControlName="nombre" type="text" class="form-control"
-                     [class.is-invalid]="Nombre?.invalid && Nombre?.touched">
-              <div class="invalid-feedback">El nombre es requerido.</div>
-            </div>
-
-            <div class="col-md-6">
-              <label class="form-label">Especie *</label>
-              <select formControlName="especie" class="form-select"
-                      [class.is-invalid]="Especie?.invalid && Especie?.touched">
-                <option value="">Seleccioná...</option>
-                @for (e of especies; track e) {
-                  <option [value]="e">{{ e }}</option>
-                }
-              </select>
-              <div class="invalid-feedback">La especie es requerida.</div>
-            </div>
-
-            <div class="col-md-6">
-              <label class="form-label">Raza *</label>
-              <input formControlName="raza" type="text" class="form-control"
-                     [class.is-invalid]="Raza?.invalid && Raza?.touched">
-              <div class="invalid-feedback">La raza es requerida.</div>
-            </div>
-
-            <div class="col-md-3">
-              <label class="form-label">Peso (kg) *</label>
-              <input formControlName="peso" type="number" step="0.1" class="form-control"
-                     [class.is-invalid]="Peso?.invalid && Peso?.touched">
-              <div class="invalid-feedback">El peso es requerido.</div>
-            </div>
-
-            <div class="col-md-3">
-              <label class="form-label">Fecha de nacimiento *</label>
-              <input formControlName="fecha_nacimiento" type="date" class="form-control"
-                     [class.is-invalid]="FechaNacimiento?.invalid && FechaNacimiento?.touched">
-              <div class="invalid-feedback">La fecha es requerida.</div>
-            </div>
-
-            <!-- Solo admin asigna dueño -->
-            @if (role === 'admin') {
-              <div class="col-md-6">
-                <label class="form-label">ID Dueño *</label>
-                <input formControlName="id_dueno" type="number" class="form-control"
-                       [class.is-invalid]="Dueno?.invalid && Dueno?.touched">
-                <div class="invalid-feedback">El dueño es requerido.</div>
-              </div>
-            }
-
-          </div>
-
-          <div class="mt-3 d-flex gap-2">
-            <button type="submit" class="btn btn-primary" [disabled]="cargando">
-              {{ cargando ? 'Guardando...' : (editandoId ? 'Guardar cambios' : 'Registrar') }}
-            </button>
-            @if (editandoId) {
-              <button type="button" class="btn btn-secondary" (click)="cancelarEdicion()">
-                Cancelar
-              </button>
-            }
-          </div>
-
-        </form>
-      </div>
+  <div class="card mb-4">
+    <div class="card-header">
+      <h5 class="mb-0">{{ editandoId ? 'Editar mascota' : 'Registrar mascota' }}</h5>
     </div>
-  }
+    <div class="card-body">
+      <form [formGroup]="form" (ngSubmit)="onEnviar($event)">
+        <div class="row g-3">
 
-  <!-- LISTADO -->
+          <div class="col-md-6">
+            <label class="form-label">Nombre *</label>
+            <input formControlName="nombre" type="text" class="form-control"
+                   [class.is-invalid]="Nombre?.invalid && Nombre?.touched">
+            <div class="invalid-feedback">El nombre es requerido.</div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Especie *</label>
+            <select formControlName="especie" class="form-select"
+                    [class.is-invalid]="Especie?.invalid && Especie?.touched">
+              <option value="">Seleccioná...</option>
+              @for (e of especies; track e) {
+                <option [value]="e">{{ e }}</option>
+              }
+            </select>
+            <div class="invalid-feedback">La especie es requerida.</div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Raza *</label>
+            <input formControlName="raza" type="text" class="form-control"
+                   [class.is-invalid]="Raza?.invalid && Raza?.touched">
+            <div class="invalid-feedback">La raza es requerida.</div>
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label">Peso (kg) *</label>
+            <input formControlName="peso" type="number" step="0.1" class="form-control"
+                   [class.is-invalid]="Peso?.invalid && Peso?.touched">
+            <div class="invalid-feedback">El peso es requerido.</div>
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label">Fecha de nacimiento *</label>
+            <input formControlName="fecha_nacimiento" type="date" class="form-control"
+                   [class.is-invalid]="FechaNacimiento?.invalid && FechaNacimiento?.touched">
+            <div class="invalid-feedback">La fecha es requerida.</div>
+          </div>
+
+          @if (role === 'admin') {
+            <div class="col-md-6">
+              <label class="form-label">ID Dueño *</label>
+              <input formControlName="id_dueno" type="number" class="form-control"
+                     [class.is-invalid]="Dueno?.invalid && Dueno?.touched">
+              <div class="invalid-feedback">El dueño es requerido.</div>
+            </div>
+          }
+
+        </div>
+
+        <div class="mt-3 d-flex gap-2">
+          <button type="submit" class="btn btn-primary" [disabled]="cargando">
+            {{ cargando ? 'Guardando...' : (editandoId ? 'Guardar cambios' : 'Registrar') }}
+          </button>
+          @if (editandoId) {
+            <button type="button" class="btn btn-secondary" (click)="cancelarEdicion()">
+              Cancelar
+            </button>
+          }
+        </div>
+
+      </form>
+    </div>
+  </div>
+
   <div class="card">
     <div class="card-header">
       <h5 class="mb-0">
@@ -106,9 +101,7 @@
               @if (role !== 'cliente') {
                 <th>Dueño</th>
               }
-              @if (role === 'admin' || role === 'veterinario') {
-                <th>Acciones</th>
-              }
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -122,12 +115,11 @@
                 @if (role !== 'cliente') {
                   <td>{{ m.dueno_nombre }}</td>
                 }
-                @if (role === 'admin' || role === 'veterinario') {
-                  <td>
-                    <button class="btn btn-sm btn-warning me-1" (click)="editarMascota(m)">Editar</button>
-                    <button class="btn btn-sm btn-danger" (click)="eliminarMascota(m.id)">Eliminar</button>
-                  </td>
-                }
+                <td>
+                  <a [routerLink]="['/mascotas', m.id, 'carnet']" class="btn btn-sm btn-info me-1">Carnet</a>
+                  <button class="btn btn-sm btn-warning me-1" (click)="editarMascota(m)">Editar</button>
+                  <button class="btn btn-sm btn-danger" (click)="eliminarMascota(m.id)">Eliminar</button>
+                </td>
               </tr>
             }
           </tbody>

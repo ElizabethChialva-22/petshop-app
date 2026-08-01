@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class MascotasService {
 
-  private apiUrl = 'http://127.0.0.1:8000/mascotas/';
+  private apiUrl = 'http://127.0.0.1:8000/api/mascotas/';
 
   constructor(private http: HttpClient) {}
 

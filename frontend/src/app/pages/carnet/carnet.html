@@ -1,0 +1,135 @@
+<div class="container mt-4">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Carnet de {{ mascota?.nombre }}</h2>
+    <a routerLink="/mascotas" class="btn btn-outline-secondary btn-sm">Volver</a>
+  </div>
+
+  @if (mensaje) {
+    <div class="alert alert-info py-2">{{ mensaje }}</div>
+  }
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">Vacunas</h5>
+      <button class="btn btn-primary btn-sm" (click)="mostrarFormVacuna = !mostrarFormVacuna">
+        {{ mostrarFormVacuna ? 'Cancelar' : '+ Agregar vacuna' }}
+      </button>
+    </div>
+
+    @if (mostrarFormVacuna) {
+      <div class="card-body border-bottom">
+        <form [formGroup]="formVacuna" (ngSubmit)="agregarVacuna()">
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label">Vacuna *</label>
+              <input formControlName="nombre_vacuna" type="text" class="form-control" placeholder="Ej: Antirrábica">
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Fecha aplicación *</label>
+              <input formControlName="fecha_aplicacion" type="date" class="form-control">
+            </div>
+            
+            <div class="col-md-2">
+              <label class="form-label">Veterinario *</label>
+              <input formControlName="veterinario" type="text" class="form-control" placeholder="Nombre">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-success mt-3 btn-sm">Guardar</button>
+        </form>
+      </div>
+    }
+
+    <div class="card-body p-0">
+      @if (vacunaciones.length === 0) {
+        <p class="text-muted text-center py-3">Sin vacunas registradas.</p>
+      } @else {
+        <table class="table table-bordered table-hover mb-0">
+          <thead class="table-dark">
+            <tr>
+              <th>Vacuna</th>
+              <th>Fecha aplicación</th>
+              <th>Veterinario</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (v of vacunaciones; track v.id_vacunacion) {
+              <tr>
+                <td>{{ v.nombre_vacuna }}</td>
+                <td>{{ v.fecha_aplicacion }}</td>
+                <td>{{ v.veterinario }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">Turnos</h5>
+      <button class="btn btn-primary btn-sm" (click)="mostrarFormTurno = !mostrarFormTurno">
+        {{ mostrarFormTurno ? 'Cancelar' : '+ Agregar turno' }}
+      </button>
+    </div>
+
+    @if (mostrarFormTurno) {
+      <div class="card-body border-bottom">
+        <form [formGroup]="formTurno" (ngSubmit)="agregarTurno()">
+          <div class="row g-3">
+            <div class="col-md-3">
+              <label class="form-label">Fecha *</label>
+              <input formControlName="fecha" type="date" class="form-control">
+            </div>
+            <div class="col-md-5">
+              <label class="form-label">Motivo *</label>
+              <input formControlName="motivo" type="text" class="form-control" placeholder="Ej: Control anual">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Estado</label>
+              <select formControlName="estado" class="form-select">
+                <option value="pendiente">Pendiente</option>
+                <option value="confirmado">Confirmado</option>
+                <option value="cancelado">Cancelado</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Observaciones</label>
+              <input formControlName="observaciones" type="text" class="form-control">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-success mt-3 btn-sm">Guardar</button>
+        </form>
+      </div>
+    }
+
+    <div class="card-body p-0">
+      @if (turnos.length === 0) {
+        <p class="text-muted text-center py-3">Sin turnos registrados.</p>
+      } @else {
+        <table class="table table-bordered table-hover mb-0">
+          <thead class="table-dark">
+            <tr>
+              <th>Fecha</th>
+              <th>Motivo</th>
+              <th>Estado</th>
+              <th>Observaciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (t of turnos; track t.id_turno) {
+              <tr>
+                <td>{{ t.fecha }}</td>
+                <td>{{ t.motivo }}</td>
+                <td>{{ t.estado }}</td>
+                <td>{{ t.observaciones || '-' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+  </div>
+
+</div>

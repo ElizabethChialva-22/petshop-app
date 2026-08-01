@@ -16,7 +16,14 @@ class Usuario(models.Model):
             ('veterinario', 'Veterinario'),
         ],
         default='cliente'
-             )
+    )
+
+    @property
+    def is_authenticated(self):
+        return True
+    
+    def __str__(self):
+        return self.name
 
 class Mascota(models.Model):
     nombre = models.CharField(max_length=100)
@@ -50,7 +57,7 @@ class Vacuna(models.Model):
 class Vacunacion(models.Model):
     id_vacunacion = models.AutoField(primary_key=True)
     id_mascota = models.ForeignKey(Mascota, on_delete=models.CASCADE, related_name='vacunaciones')
-    id_vacuna = models.ForeignKey(Vacuna, on_delete=models.CASCADE, related_name='vacunaciones')
+    nombre_vacuna = models.CharField(max_length=100)
     fecha_aplicacion = models.DateField()
     proxima_dosis = models.DateField(blank=True, null=True)
     veterinario = models.CharField(max_length=100)
@@ -66,3 +73,13 @@ class Producto(models.Model):
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.IntegerField()
     id_categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, related_name='productos')
+    imagen = models.URLField(blank=True, null=True)
+
+class Contacto(models.Model):
+    id_contacto = models.AutoField(primary_key=True)
+    email = models.EmailField()
+    mensaje = models.TextField()
+    fecha = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.email

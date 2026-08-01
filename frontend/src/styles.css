@@ -5,3 +5,19 @@
 .ng-invalid:not(form).ng-touched {
   border-left: 5px solid #a94442;
 }
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+router-outlet + * {
+  flex: 1;
+}

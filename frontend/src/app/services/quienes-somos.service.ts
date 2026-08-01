@@ -10,29 +10,47 @@ export class QuienesSomosService {
   obtenerProfesionales() {
     this.profesionalList = [
       {
-        nombre: 'Dr. Martín Sosa',
-        rol: 'Veterinario',
-        descripcion: 'Especialista en pequeños animales con más de 10 años de experiencia.',
-        foto: 'equipo/Martin.jpg'
+        nombre: 'Lautaro Nahuel Ancillotti',
+        rol: 'Atención al cliente',
+        descripcion: 'Se encarga de que cada consulta tenga respuesta.',
+        foto: 'equipo/Lautaro.jpg'
       },
       {
-        nombre: 'Laura Méndez',
-        rol: 'Secretaria',
-        descripcion: 'Coordinadora de turnos y atención al cliente. La primera sonrisa que vas a ver.',
+        nombre: 'Laura Molina',
+        rol: 'Diseño y comunicación',
+        descripcion: 'Se ocupa de la imagen y la comunicación del equipo.',
         foto: 'equipo/Laura.jpg'
       },
       {
-        nombre: 'Sofía Ramírez',
-        rol: 'Vendedora',
-        descripcion: 'Asesora en nutrición y productos para mascotas. Te ayuda a elegir lo mejor.',
-        foto: 'equipo/Sofia.jpg'
+        nombre: 'Claudio Nicolas Audicio',
+        rol: 'Logística y stock',
+        descripcion: 'Controla que los productos estén siempre disponibles.',
+        foto: 'equipo/Claudio.jpg'
       },
       {
-        nombre: 'Tomi',
-        rol: 'Asistente Virtual',
-        descripcion: 'Tu ayudante virtual disponible las 24hs para responder dudas sobre productos.',
-        foto: 'equipo/Tomi.jpg'
-      }
+        nombre: 'Elizabeth Normal J. Chialva',
+        rol: 'Administración',
+        descripcion: 'Mantiene todo en orden detrás de escena.',
+        foto: 'equipo/Elizabeth.jpg'
+      },
+      {
+        nombre: 'Adrián Nicolas Tello',
+        rol: 'Desarrollo web',
+        descripcion: 'Trabaja en que la plataforma funcione bien.',
+        foto: 'equipo/Nicolas.jpg'
+      },
+      {
+        nombre: 'Matias Ibarra',
+        rol: 'Ventas',
+        descripcion: 'Ayuda a encontrar el producto indicado para cada mascota.',
+        foto: 'equipo/Matias.jpg'
+      },
+      {
+        nombre: 'Francisco Junco',
+        rol: 'Soporte técnico',
+        descripcion: 'Resuelve los problemas técnicos del día a día.',
+        foto: 'equipo/Francisco.jpg'
+      },
     ];
     return this.profesionalList;
   }

@@ -9,6 +9,9 @@ from rest_framework.views import APIView
 from .models import Usuario, Mascota, Turno, Vacunacion, Vacuna, Categoria, Producto
 from .serializers import (UsuarioSerializer, MascotaSerializer, TurnoSerializer,
                           VacunacionSerializer, VacunaSerializer, CategoriaSerializer, ProductoSerializer)
+from rest_framework import generics
+from .models import Contacto
+from .serializers import ContactoSerializer                          
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -24,8 +27,9 @@ def login(request):
     if not check_password(password, user.password):
         return Response({'error': 'Credenciales inválidas.'}, status=status.HTTP_401_UNAUTHORIZED)
 
-    user.token = secrets.token_hex(32)
-    user.save(update_fields=['token'])
+    if not user.token:
+        user.token = secrets.token_hex(32)
+        user.save(update_fields=['token'])
 
     return Response({'token': user.token, 'user': UsuarioSerializer(user).data})
 
@@ -144,7 +148,10 @@ class CategoriaViewSet(APIView):
         return Response(serializer.errors, status=400)
 
 class ProductoViewSet(APIView):
-    permission_classes = [IsAuthenticated]
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            return [AllowAny()]
+        return [IsAuthenticated()]
 
     def get(self, request):
         return Response(ProductoSerializer(Producto.objects.all(), many=True).data)
@@ -157,7 +164,10 @@ class ProductoViewSet(APIView):
         return Response(serializer.errors, status=400)
 
 class ProductoDetailViewSet(APIView):
-    permission_classes = [IsAuthenticated]
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            return [AllowAny()]
+        return [IsAuthenticated()]
 
     def get(self, request, pk):
         try:
@@ -184,3 +194,40 @@ class ProductoDetailViewSet(APIView):
             return Response({'error': 'No encontrado.'}, status=404)
         producto.delete()
         return Response(status=204)
+    
+class VacunacionesPorMascotaView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk):
+        vacunaciones = Vacunacion.objects.filter(id_mascota=pk)
+        return Response(VacunacionSerializer(vacunaciones, many=True).data)
+
+    def post(self, request, pk):
+        data = request.data.copy()
+        data['id_mascota'] = pk
+        if not data.get('proxima_dosis'):
+            data['proxima_dosis'] = None
+        serializer = VacunacionSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+
+class TurnosPorMascotaView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk):
+        turnos = Turno.objects.filter(id_mascota=pk)
+        return Response(TurnoSerializer(turnos, many=True).data)
+
+    def post(self, request, pk):
+        data = request.data.copy()
+        data['id_mascota'] = pk
+        serializer = TurnoSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+class ContactoCreateView(generics.CreateAPIView):
+    queryset = Contacto.objects.all()
+    serializer_class = ContactoSerializer        

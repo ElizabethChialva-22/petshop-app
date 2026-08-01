@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { UsuarioService } from '../../services/usuario.service';
+import { UserService } from '../../services/user.service';
 import { Usuario } from '../../models/usuario';
 
 function contrasenaCoincide(control: AbstractControl): ValidationErrors | null {
@@ -27,7 +27,7 @@ export class RegistroComponent {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private usuarioService: UsuarioService
+    private userService: UserService
   ) {
     this.form = this.formBuilder.group({
       nombre: ['', [Validators.required, Validators.minLength(2), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]*')]],
@@ -64,7 +64,7 @@ export class RegistroComponent {
       password: this.form.value.contrasena
     };
 
-    this.usuarioService.registrarUsuario(nuevoUsuario).subscribe({
+    this.userService.registrarUsuario(nuevoUsuario).subscribe({
       next: (res: any) => {
         this.exitoMsg = '¡Registro exitoso! Redirigiendo a iniciar sesión...';
         this.form.reset();

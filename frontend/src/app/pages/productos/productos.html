@@ -1,106 +1,22 @@
 <div class="container mt-4">
-
-  <!-- FORMULARIO -->
-  <div class="card mb-4">
-    <div class="card-header">
-      <h5 class="mb-0">{{ editandoId ? 'Editar Producto' : 'Nuevo Producto' }}</h5>
+  <h2 class="mb-4">Nuestros Productos</h2>
+  <div class="row g-4">
+    <div class="col-md-4" *ngFor="let p of productos">
+      <div class="card h-100 shadow-sm">
+        <img *ngIf="p.imagen" [src]="p.imagen" class="card-img-top" style="height:200px; object-fit:cover">
+        <div class="card-body">
+          <h5 class="card-title">{{ p.nombre }}</h5>
+          <span class="badge bg-secondary mb-2">{{ p.categoria_nombre }}</span>
+          <p class="card-text text-muted">{{ p.descripcion }}</p>
+        </div>
+        <div class="card-footer d-flex justify-content-between align-items-center">
+          <span class="fw-bold text-success fs-5">$ {{ p.precio }}</span>
+          <span class="text-muted small">Stock: {{ p.stock }}</span>
+        </div>
+      </div>
     </div>
-    <div class="card-body">
-      <form [formGroup]="form" (submit)="onEnviar($event)">
-        <div class="row g-3">
-
-          <div class="col-md-6">
-            <label class="form-label">Nombre *</label>
-            <input formControlName="nombre" class="form-control"
-                   [class.is-invalid]="Nombre?.invalid && Nombre?.touched" />
-            <div class="invalid-feedback">El nombre es obligatorio.</div>
-          </div>
-
-          <div class="col-md-3">
-            <label class="form-label">Precio *</label>
-            <input formControlName="precio" type="number" min="0" class="form-control"
-                   [class.is-invalid]="Precio?.invalid && Precio?.touched" />
-            <div class="invalid-feedback">Ingresá un precio válido.</div>
-          </div>
-
-          <div class="col-md-3">
-            <label class="form-label">Stock *</label>
-            <input formControlName="stock" type="number" min="0" class="form-control"
-                   [class.is-invalid]="Stock?.invalid && Stock?.touched" />
-            <div class="invalid-feedback">Ingresá un stock válido.</div>
-          </div>
-
-          <div class="col-md-6">
-            <label class="form-label">Categoría *</label>
-            <select formControlName="id_categoria" class="form-select"
-                    [class.is-invalid]="Categoria?.invalid && Categoria?.touched">
-              <option value="">Seleccioná una categoría</option>
-              <option *ngFor="let c of categorias" [value]="c.id_categoria">
-                {{ c.nombre }}
-              </option>
-            </select>
-            <div class="invalid-feedback">Seleccioná una categoría.</div>
-          </div>
-
-          <div class="col-12">
-            <label class="form-label">Descripción *</label>
-            <textarea formControlName="descripcion" class="form-control" rows="2"
-                      [class.is-invalid]="Descripcion?.invalid && Descripcion?.touched"></textarea>
-            <div class="invalid-feedback">La descripción es obligatoria.</div>
-          </div>
-
-        </div>
-
-        <div class="mt-3 d-flex gap-2">
-          <button type="submit" class="btn btn-primary" [disabled]="cargando">
-            {{ cargando ? 'Guardando...' : (editandoId ? 'Actualizar' : 'Registrar') }}
-          </button>
-          <button type="button" class="btn btn-secondary"
-                  *ngIf="editandoId" (click)="cancelarEdicion()">
-            Cancelar
-          </button>
-        </div>
-
-        <div class="mt-2 text-success" *ngIf="mensaje">{{ mensaje }}</div>
-      </form>
+    <div *ngIf="productos.length === 0" class="text-center text-muted py-5">
+      <p>No hay productos disponibles.</p>
     </div>
   </div>
-
-  <!-- TABLA -->
-  <div class="card">
-    <div class="card-header"><h5 class="mb-0">Listado de Productos</h5></div>
-    <div class="card-body p-0">
-      <table class="table table-bordered table-hover mb-0">
-        <thead class="table-dark">
-          <tr>
-            <th>#</th>
-            <th>Nombre</th>
-            <th>Categoría</th>
-            <th>Precio</th>
-            <th>Stock</th>
-            <th>Descripción</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngIf="productos.length === 0">
-            <td colspan="7" class="text-center text-muted py-3">No hay productos registrados.</td>
-          </tr>
-          <tr *ngFor="let p of productos">
-            <td>{{ p.id_producto }}</td>
-            <td>{{ p.nombre }}</td>
-            <td>{{ p.categoria_nombre }}</td>
-            <td>$ {{ p.precio }}</td>
-            <td>{{ p.stock }}</td>
-            <td>{{ p.descripcion }}</td>
-            <td>
-              <button class="btn btn-sm btn-warning me-1" (click)="editarProducto(p)">Editar</button>
-              <button class="btn btn-sm btn-danger" (click)="eliminarProducto(p.id_producto)">Eliminar</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
 </div>

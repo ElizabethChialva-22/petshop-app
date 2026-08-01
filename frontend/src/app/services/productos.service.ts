@@ -19,7 +19,7 @@ export interface Categoria {
 
 @Injectable({ providedIn: 'root' })
 export class ProductosService {
-  private api = 'http://localhost:8000/api';
+  private api = 'http://127.0.0.1:8000/api';
 
   constructor(private http: HttpClient) {}
 
@@ -29,8 +29,7 @@ export class ProductosService {
   }
 
   obtenerProductos(): Observable<Producto[]> {
-    return this.http.get<Producto[]>(`${this.api}/productos/`,
-      { headers: this.getHeaders() });
+    return this.http.get<Producto[]>(`${this.api}/productos/`);
   }
 
   obtenerCategorias(): Observable<Categoria[]> {

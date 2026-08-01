@@ -1,20 +1,103 @@
-<section class="py-5 bg-light">
-  <div class="container">
+<style>
+  .about-page-bg {
+    background-color: #f4f6f9;
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
+  }
+
+  .about-page-bg::before {
+    content: "🐾  🐱  🐾  🐶  🐾  🐱  🐾  🐶  🐾  🐱  🐾  🐶  🐾  🐱  🐾  🐶  🐾  🐱  🐾  🐶  🐾  🐱  🐾  🐶  🐾  🐱  🐾  🐶  🐾  🐱  🐾  🐶  🐾  🐱  🐾  🐶  🐾  🐱  🐾  🐶  🐾  🐱  🐾  🐶  🐾  🐱  🐾  🐶  🐾  🐱  🐾  🐶  🐾  🐱  🐾  🐶  🐾  🐱  🐾  🐶  🐾  🐱  🐾  🐶  🐾  🐱  🐾  🐶  🐾  🐱  🐾  🐶  🐾  🐱  🐾  🐶  🐾  🐱  🐾  🐶  🐾  🐱  🐾  🐶  🐾  🐱  🐾  🐶  🐾  🐱  🐾  🐶  🐾  🐱  🐾  🐶  🐾  🐱  🐾  🐶";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.15;
+    color: #a1b0cb;
+    font-size: 24px;
+    letter-spacing: 35px;
+    line-height: 70px;
+    word-wrap: break-word;
+    pointer-events: none;
+    padding: 20px;
+  }
+
+  .main-container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .main-title {
+    color: #4a6572;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+
+  .card-persona {
+    border: none;
+    border-radius: 12px;
+    background: #ffffff;
+    padding: 2rem 1.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    height: 100%;
+  }
+
+  .card-persona:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05) !important;
+  }
+
+  .avatar {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #f8fafc;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  }
+
+  .badge-rol {
+    background-color: #e2e8f0;
+    color: #475569;
+    font-weight: 600;
+    font-size: 0.8rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 50px;
+    display: inline-block;
+    border: 1px solid #cbd5e1;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .text-name {
+    color: #34495e;
+    font-size: 1.15rem;
+  }
+</style>
+
+<div class="about-page-bg py-5">
+  <div class="container main-container">
 
     <div class="text-center mb-5">
-      <h2 class="display-5 fw-bold text-primary">Nuestro Equipo</h2>
-      <p class="lead text-muted">Las personas detrás de PetShop App</p>
+      <h1 class="display-5 main-title mb-2">Nuestro Equipo</h1>
+      <p class="lead text-muted small style-subtitle">Las personas detrás de PetShop App</p>
+      <div style="width: 60px; height: 4px; background-color: #618685; border-radius: 2px;" class="mx-auto mt-3"></div>
     </div>
 
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 justify-content-center">
 
       @for (persona of equipo; track persona.nombre) {
         <div class="col">
-          <div class="card-persona text-center">
+          <div class="card-persona text-center shadow-sm">
             <img [src]="persona.foto" [alt]="persona.nombre" class="avatar mb-3" />
-            <h5 class="fw-bold mb-1">{{ persona.nombre }}</h5>
-            <span class="badge-rol">{{ persona.rol }}</span>
-            <p class="text-muted mt-2 small">{{ persona.descripcion }}</p>
+            <h5 class="fw-bold text-name mb-2">{{ persona.nombre }}</h5>
+            <div class="mb-3">
+              <span class="badge-rol">{{ persona.rol }}</span>
+            </div>
+            <p class="text-muted mb-0 small" style="line-height: 1.5;">{{ persona.descripcion }}</p>
           </div>
         </div>
       }
@@ -22,4 +105,4 @@
     </div>
 
   </div>
-</section>
+</div>

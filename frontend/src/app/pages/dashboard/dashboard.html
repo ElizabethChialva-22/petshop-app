@@ -5,30 +5,61 @@
   </div>
 
   @if (role === 'admin') {
-    <div class="row g-3 mb-4">
-      <div class="col-md-4">
-        <div class="card text-center p-3 shadow-sm">
-          <h5 class="text-muted">Usuarios</h5>
-          <p class="fs-3 fw-bold mb-0">—</p>
+    <div class="card shadow-sm mb-4">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Resumen</h5>
+        <div class="d-flex gap-2">
+          <a routerLink="/admin-usuarios" class="btn btn-primary btn-sm">Gestionar Usuarios</a>
+          <a routerLink="/mascotas" class="btn btn-secondary btn-sm">Gestionar Mascotas</a>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="card text-center p-3 shadow-sm">
-          <h5 class="text-muted">Mascotas</h5>
-          <p class="fs-3 fw-bold mb-0">—</p>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card text-center p-3 shadow-sm">
-          <h5 class="text-muted">Productos</h5>
-          <p class="fs-3 fw-bold mb-0">—</p>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-6 text-center">
+            <h5 class="text-muted">Usuarios</h5>
+            <p class="fs-3 fw-bold mb-0">{{ totalUsuarios }}</p>
+          </div>
+          <div class="col-md-6 text-center">
+            <h5 class="text-muted">Mascotas</h5>
+            <p class="fs-3 fw-bold mb-0">{{ totalMascotas }}</p>
+          </div>
         </div>
       </div>
     </div>
+
     <div class="card shadow-sm">
-      <div class="card-body">
-        <h5 class="card-title">Tabla de productos</h5>
-        <p class="text-muted">Sin datos aún.</p>
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Productos ({{ totalProductos }})</h5>
+        <a routerLink="/admin-productos" class="btn btn-primary btn-sm">Gestionar Productos</a>
+      </div>
+      <div class="card-body p-0">
+        <table class="table table-bordered table-hover mb-0">
+          <thead class="table-dark">
+            <tr>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Categoría</th>
+              <th>Precio</th>
+              <th>Stock</th>
+            </tr>
+          </thead>
+          <tbody>
+            @if (productos.length === 0) {
+              <tr>
+                <td colspan="5" class="text-center text-muted py-3">No hay productos registrados.</td>
+              </tr>
+            }
+            @for (p of productos; track p.id_producto) {
+              <tr>
+                <td>{{ p.id_producto }}</td>
+                <td>{{ p.nombre }}</td>
+                <td>{{ p.categoria_nombre }}</td>
+                <td>$ {{ p.precio }}</td>
+                <td>{{ p.stock }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
       </div>
     </div>
   }
@@ -37,17 +68,45 @@
     <div class="row g-3">
       <div class="col-md-6">
         <div class="card shadow-sm">
-          <div class="card-body">
-            <h5 class="card-title">Mis mascotas</h5>
-            <p class="text-muted">Sin mascotas registradas.</p>
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Mis mascotas ({{ misMascotas.length }})</h5>
+            <a routerLink="/mascotas" class="btn btn-primary btn-sm">Ver mascotas</a>
+          </div>
+          <div class="card-body p-0">
+            @if (misMascotas.length === 0) {
+              <p class="text-muted text-center py-3">Sin mascotas registradas.</p>
+            } @else {
+              <table class="table table-bordered table-hover mb-0">
+                <thead class="table-dark">
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Especie</th>
+                    <th>Raza</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (m of misMascotas; track m.id) {
+                    <tr>
+                      <td>{{ m.nombre }}</td>
+                      <td>{{ m.especie }}</td>
+                      <td>{{ m.raza }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            }
           </div>
         </div>
       </div>
       <div class="col-md-6">
         <div class="card shadow-sm">
-          <div class="card-body">
-            <h5 class="card-title">Productos recomendados</h5>
-            <p class="text-muted">Sin productos disponibles.</p>
+          <div class="card-body text-center py-4">
+            <h4 class="fw-bold"> <img src="hola gatito.png" alt="Hola">¡Hola, {{ nombreUsuario }}!</h4>
+            <p class="text-muted mt-2">
+              Tenés <strong>{{ misMascotas.length }}</strong>
+              {{ misMascotas.length === 1 ? 'mascota registrada' : 'mascotas registradas' }}.
+            </p>
+            <a routerLink="/mascotas" class="btn btn-primary mt-2">Ver mis mascotas</a>
           </div>
         </div>
       </div>

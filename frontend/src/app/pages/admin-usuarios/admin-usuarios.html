@@ -1,0 +1,40 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Gestión de Usuarios</h2>
+    <a routerLink="/dashboard" class="btn btn-outline-secondary btn-sm">Volver al Dashboard</a>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-body p-0">
+      <table class="table table-bordered table-hover mb-0">
+        <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Dirección</th>
+            <th>Rol</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if (usuarios.length === 0) {
+            <tr>
+              <td colspan="6" class="text-center text-muted py-3">No hay usuarios registrados.</td>
+            </tr>
+          }
+          @for (u of usuarios; track u.id_usuario) {
+            <tr>
+              <td>{{ u.id_usuario }}</td>
+              <td>{{ u.name }}</td>
+              <td>{{ u.email }}</td>
+              <td>{{ u.telefono || '-' }}</td>
+              <td>{{ u.direccion || '-' }}</td>
+              <td>{{ u.role }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

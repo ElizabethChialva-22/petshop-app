@@ -1,0 +1,97 @@
+<div class="container mt-4">
+  <h2 class="mb-4">🛠️ Administración de Productos</h2>
+
+  <div class="card mb-4">
+    <div class="card-header">
+      <h5 class="mb-0">{{ editandoId ? 'Editar Producto' : 'Nuevo Producto' }}</h5>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="form" (submit)="onEnviar($event)">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Nombre *</label>
+            <input formControlName="nombre" class="form-control"
+                   [class.is-invalid]="Nombre?.invalid && Nombre?.touched" />
+            <div class="invalid-feedback">El nombre es obligatorio.</div>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Precio *</label>
+            <input formControlName="precio" type="number" min="0" class="form-control"
+                   [class.is-invalid]="Precio?.invalid && Precio?.touched" />
+            <div class="invalid-feedback">Ingresá un precio válido.</div>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Stock *</label>
+            <input formControlName="stock" type="number" min="0" class="form-control"
+                   [class.is-invalid]="Stock?.invalid && Stock?.touched" />
+            <div class="invalid-feedback">Ingresá un stock válido.</div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Categoría *</label>
+            <select formControlName="id_categoria" class="form-select"
+                    [class.is-invalid]="Categoria?.invalid && Categoria?.touched">
+              <option value="">Seleccioná una categoría</option>
+              <option *ngFor="let c of categorias" [value]="c.id_categoria">{{ c.nombre }}</option>
+            </select>
+            <div class="invalid-feedback">Seleccioná una categoría.</div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">URL de imagen</label>
+            <input formControlName="imagen" class="form-control" placeholder="https://..." />
+          </div>
+
+          <div class="col-12">
+            <label class="form-label">Descripción *</label>
+            <textarea formControlName="descripcion" class="form-control" rows="2"
+                      [class.is-invalid]="Descripcion?.invalid && Descripcion?.touched"></textarea>
+            <div class="invalid-feedback">La descripción es obligatoria.</div>
+          </div>
+        </div>
+        <div class="mt-3 d-flex gap-2">
+          <button type="submit" class="btn btn-primary" [disabled]="cargando">
+            {{ cargando ? 'Guardando...' : (editandoId ? 'Actualizar' : 'Registrar') }}
+          </button>
+          <button type="button" class="btn btn-secondary"
+                  *ngIf="editandoId" (click)="cancelarEdicion()">Cancelar</button>
+        </div>
+        <div class="mt-2 text-success" *ngIf="mensaje">{{ mensaje }}</div>
+      </form>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><h5 class="mb-0">Listado de Productos</h5></div>
+    <div class="card-body p-0">
+      <table class="table table-bordered table-hover mb-0">
+        <thead class="table-dark">
+          <tr>
+            <th>#</th><th>Nombre</th><th>Categoría</th>
+            <th>Precio</th><th>Stock</th><th>Descripción</th><th>Imagen</th><th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="productos.length === 0">
+            <td colspan="8" class="text-center text-muted py-3">No hay productos registrados.</td>
+          </tr>
+          <tr *ngFor="let p of productos">
+            <td>{{ p.id_producto }}</td>
+            <td>{{ p.nombre }}</td>
+            <td>{{ p.categoria_nombre }}</td>
+            <td>$ {{ p.precio }}</td>
+            <td>{{ p.stock }}</td>
+            <td>{{ p.descripcion }}</td>
+            <td>
+              <img *ngIf="p.imagen" [src]="p.imagen" width="50" height="50" style="object-fit:cover">
+              <span *ngIf="!p.imagen">—</span>
+            </td>
+            <td>
+              <button class="btn btn-sm btn-warning me-1" (click)="editarProducto(p)">Editar</button>
+              <button class="btn btn-sm btn-danger" (click)="eliminarProducto(p.id_producto)">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

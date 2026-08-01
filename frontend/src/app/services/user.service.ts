@@ -39,4 +39,12 @@ export class UserService {
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${API_URL}/usuarios/`, this.authHeaders());
   }
+
+  obtenerUsuarios(): Observable<User[]> {
+    return this.http.get<User[]>(`${API_URL}/usuarios/`, this.authHeaders());
+  }
+
+  registrarUsuario(usuario: any): Observable<any> {
+    return this.http.post<any>(`${API_URL}/usuarios/`, usuario);
+  }
 }

@@ -1,18 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MascotasService } from '../../services/mascota.service';
+import { NgZone } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-mascotas',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './mascotas.html',
   styleUrl: './mascotas.css'
 })
 export class MascotasComponent implements OnInit {
 
   role = '';
+  usuarioId: number | null = null;
 
   form!: FormGroup;
   mascotas: any[] = [];
@@ -24,7 +27,9 @@ export class MascotasComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private mascotasService: MascotasService
+    private mascotasService: MascotasService,
+    private cdr: ChangeDetectorRef,
+    private ngZone: NgZone
   ) {
     this.form = this.fb.group({
       nombre: ['', [Validators.required]],
@@ -35,25 +40,32 @@ export class MascotasComponent implements OnInit {
       id_dueno: ['']
     });
   }
+
   ngOnInit(): void {
     this.role = localStorage.getItem('role') ?? 'cliente';
+    const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+    this.usuarioId = usuario.id_usuario ?? null;
     this.cargarMascotas();
   }
 
   cargarMascotas(): void {
-
-    const usuario = JSON.parse(
-      localStorage.getItem('usuario') || '{}'
-    );
-
     this.mascotasService.obtenerMascotas().subscribe({
       next: (data) => {
-        this.mascotas = data.filter(
-          (m: any) =>
-            m.id_dueno === usuario.id_usuario
-        );
+        this.ngZone.run(() => {
+          if (this.role === 'admin' || this.role === 'veterinario') {
+            this.mascotas = data;
+          } else {
+            this.mascotas = data.filter((m: any) => m.id_dueno === this.usuarioId);
+          }
+          this.cdr.markForCheck();
+        });
       },
-      error: () => this.mensaje = 'Error al cargar mascotas.'
+      error: () => {
+        this.ngZone.run(() => {
+          this.mensaje = 'Error al cargar mascotas.';
+          this.cdr.markForCheck();
+        });
+      }
     });
   }
 
@@ -62,31 +74,35 @@ export class MascotasComponent implements OnInit {
     if (this.form.invalid) { this.form.markAllAsTouched(); return; }
 
     this.cargando = true;
-    const usuario = JSON.parse(
-      localStorage.getItem('usuario') || '{}'
-    );
+
+    const idDueno = this.role === 'admin'
+      ? this.form.value.id_dueno
+      : this.usuarioId;
 
     const mascotaData = {
       ...this.form.value,
-      id_dueno: usuario.id_usuario
+      id_dueno: idDueno
     };
 
     const operacion = this.editandoId
-      ? this.mascotasService.actualizarMascota(
-          this.editandoId,
-          mascotaData
-        )
-      : this.mascotasService.crearMascota(
-          mascotaData
-        );
+      ? this.mascotasService.actualizarMascota(this.editandoId, mascotaData)
+      : this.mascotasService.crearMascota(mascotaData);
 
     operacion.subscribe({
       next: () => {
-        this.mensaje = this.editandoId ? 'Mascota actualizada.' : 'Mascota registrada.';
-        this.resetForm();
-        this.cargarMascotas();
+        this.ngZone.run(() => {
+          this.mensaje = this.editandoId ? 'Mascota actualizada.' : 'Mascota registrada.';
+          this.resetForm();
+          this.cargarMascotas();
+        });
       },
-      error: () => this.mensaje = 'Error al guardar.',
+      error: () => {
+        this.ngZone.run(() => {
+          this.mensaje = 'Error al guardar.';
+          this.cargando = false;
+          this.cdr.markForCheck();
+        });
+      },
       complete: () => this.cargando = false
     });
   }
@@ -94,12 +110,12 @@ export class MascotasComponent implements OnInit {
   editarMascota(mascota: any): void {
     this.editandoId = mascota.id;
     this.form.patchValue({
-      nombre:           mascota.nombre,
-      especie:          mascota.especie,
-      raza:             mascota.raza,
-      peso:             mascota.peso,
+      nombre: mascota.nombre,
+      especie: mascota.especie,
+      raza: mascota.raza,
+      peso: mascota.peso,
       fecha_nacimiento: mascota.fecha_nacimiento,
-
+      id_dueno: mascota.id_dueno
     });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -107,7 +123,7 @@ export class MascotasComponent implements OnInit {
   eliminarMascota(id: number): void {
     if (!confirm('¿Eliminar esta mascota?')) return;
     this.mascotasService.eliminarMascota(id).subscribe({
-      next: () => this.cargarMascotas(),
+      next: () => this.ngZone.run(() => this.cargarMascotas()),
       error: () => this.mensaje = 'Error al eliminar.'
     });
   }
@@ -127,6 +143,5 @@ export class MascotasComponent implements OnInit {
   get Raza()            { return this.form.get('raza'); }
   get Peso()            { return this.form.get('peso'); }
   get FechaNacimiento() { return this.form.get('fecha_nacimiento'); }
-  get Dueno()           { return this.form.get('id_dueno');
-  }
-  }
+  get Dueno()           { return this.form.get('id_dueno'); }
+}

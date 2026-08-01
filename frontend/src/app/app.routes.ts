@@ -7,6 +7,10 @@ import { IniciarSesion } from './pages/iniciar-sesion/iniciar-sesion';
 import { MascotasComponent } from './pages/mascotas/mascotas';
 import { DashboardComponent } from './pages/dashboard/dashboard';
 import { authGuard } from './guards/auth.guard';
+import { ProductosComponent } from './pages/productos/productos';
+import { AdminProductosComponent } from './pages/admin-productos/admin-productos';
+import { AdminUsuariosComponent } from './pages/admin-usuarios/admin-usuarios';
+import { CarnetComponent } from './pages/carnet/carnet';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -16,5 +20,9 @@ export const routes: Routes = [
   { path: 'iniciar-sesion', component: IniciarSesion },
   { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
   { path: 'mascotas', component: MascotasComponent, canActivate: [authGuard] },
+  { path: 'mascotas/:id/carnet', component: CarnetComponent, canActivate: [authGuard] },
+  { path: 'productos', component: ProductosComponent },
+  { path: 'admin-productos', component: AdminProductosComponent, canActivate: [authGuard] },
+  { path: 'admin-usuarios', component: AdminUsuariosComponent, canActivate: [authGuard] },
   { path: '**', redirectTo: '' }
 ];

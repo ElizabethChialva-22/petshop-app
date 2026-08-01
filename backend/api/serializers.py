@@ -2,13 +2,14 @@ from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
 from .models import Usuario, Mascota, Turno, Vacunacion, Vacuna, Categoria, Producto
 from django.contrib.auth.hashers import make_password
+from .models import Contacto
 
 class UsuarioSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
     class Meta:
         model = Usuario
-        fields = ['id_usuario', 'name', 'email', 'rol', 'telefono', 'direccion', 'password']
+        fields = ['id_usuario', 'name', 'email', 'role', 'telefono', 'direccion', 'password']
         extra_kwargs = {
             'password': {'write_only': True}
         }
@@ -53,3 +54,8 @@ class ProductoSerializer(serializers.ModelSerializer):
     class Meta:
         model  = Producto
         fields = '__all__'
+
+class ContactoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contacto
+        fields = '__all__'        
