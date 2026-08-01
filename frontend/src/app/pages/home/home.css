@@ -22,19 +22,92 @@ section {
 }
 
 .card-feature {
-  background: white;
   padding: 28px 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  transition: transform 0.2s;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
   height: 100%;
+  color: white;
+  cursor: pointer;
 }
 
 .card-feature:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.col:nth-child(1) .card-feature {
+  background: linear-gradient(135deg, #4e73df, #6f92f8);
+}
+
+.col:nth-child(2) .card-feature {
+  background: linear-gradient(135deg, #1cc88a, #17a673);
+}
+
+.col:nth-child(3) .card-feature {
+  background: linear-gradient(135deg, #f6c23e, #e0a800);
 }
 
 ul {
   list-style: none;
   padding: 0;
+}
+
+.about-section {
+  background-color: #f8f9fa;
+}
+
+.about-item {
+  text-align: center;
+  padding: 1rem;
+}
+
+.imagen-mascotas {
+  width: 90%;
+  height: 170px;
+  object-fit: cover;
+  margin: 10px auto;
+  display: block;
+}
+
+.imagen-productos {
+  width: 90%;
+  height: 170px;
+  object-fit: cover;
+  margin: 10px auto;
+  display: block;
+}
+
+.imagen-registro {
+  width: 90%;
+  height: 170px;
+  object-fit: cover;
+  margin: 10px auto;
+  display: block;
+}
+
+.imagen-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 80px; /* separación entre íconos */
+  flex-wrap: nowrap;
+}
+
+.imagen-historial {
+  text-align: center;
+  width: 150px;
+}
+
+.imagen-historial img {
+  width: 70px;   /* tamaño del dibujo */
+  height: 70px;
+  object-fit: contain;
+  margin-bottom: 15px;
+}
+.imagen-historial {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
 }
