@@ -3,7 +3,8 @@
   <div class="row g-4">
     <div class="col-md-4" *ngFor="let p of productos">
       <div class="card h-100 shadow-sm">
-        <img *ngIf="p.imagen" [src]="p.imagen" class="card-img-top" style="height:200px; object-fit:cover">
+        <img> @if (p.imagen){
+         <img [src]="p.imagen" class="card-img-top" style="height:200px; object-fit:cover"/> }
         <div class="card-body">
           <h5 class="card-title">{{ p.nombre }}</h5>
           <span class="badge bg-secondary mb-2">{{ p.categoria_nombre }}</span>
@@ -15,8 +16,9 @@
         </div>
       </div>
     </div>
-    <div *ngIf="productos.length === 0" class="text-center text-muted py-5">
+    <div>
+     @if (productos.length === 0){ <div class="text-center text-muted py-5">
       <p>No hay productos disponibles.</p>
-    </div>
+    </div> }
   </div>
 </div>

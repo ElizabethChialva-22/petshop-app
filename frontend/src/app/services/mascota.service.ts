@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 export class MascotasService {
 
   private apiUrl = 'http://127.0.0.1:8000/api/mascotas/';
+  private apiUrlMascota = 'http://127.0.0.1:8000/api/mascota/';
+
 
   constructor(private http: HttpClient) {}
 
@@ -23,10 +25,12 @@ export class MascotasService {
   }
 
   actualizarMascota(id: number, mascota: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}${id}/`, mascota, { headers: this.headers() });
+    console.log(`Updating mascota with ID: ${id}`, mascota);
+    return this.http.put(`${this.apiUrlMascota}${id}/`, mascota, { headers: this.headers() });
   }
 
   eliminarMascota(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}${id}/`, { headers: this.headers() });
+    console.log(`Deleting mascota with ID: ${id}`);
+    return this.http.delete(`${this.apiUrlMascota}${id}/`, { headers: this.headers() });
   }
 }

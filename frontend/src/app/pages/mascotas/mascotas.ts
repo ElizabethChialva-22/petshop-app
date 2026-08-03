@@ -52,6 +52,7 @@ export class MascotasComponent implements OnInit {
     this.mascotasService.obtenerMascotas().subscribe({
       next: (data) => {
         this.ngZone.run(() => {
+          console.log('Mascotas obtenidas:', data);
           if (this.role === 'admin' || this.role === 'veterinario') {
             this.mascotas = data;
           } else {
@@ -83,31 +84,38 @@ export class MascotasComponent implements OnInit {
       ...this.form.value,
       id_dueno: idDueno
     };
-
+console.log(`Preparando para ${this.editandoId ? 'actualizar' : 'crear'} mascota con datos:`, mascotaData);
     const operacion = this.editandoId
       ? this.mascotasService.actualizarMascota(this.editandoId, mascotaData)
       : this.mascotasService.crearMascota(mascotaData);
 
+
+      console.log(`Mascota ${this.editandoId ? 'actualizada' : 'creada'} con datos:`, mascotaData);
     operacion.subscribe({
       next: () => {
+        console.log(`Mascota ${this.editandoId ? 'actualizada' : 'creada'} con éxito.`);
         this.ngZone.run(() => {
           this.mensaje = this.editandoId ? 'Mascota actualizada.' : 'Mascota registrada.';
+          
           this.resetForm();
           this.cargarMascotas();
         });
       },
       error: () => {
+        console.error('Error al guardar la mascota.');
         this.ngZone.run(() => {
           this.mensaje = 'Error al guardar.';
           this.cargando = false;
           this.cdr.markForCheck();
         });
       },
+
       complete: () => this.cargando = false
     });
   }
 
   editarMascota(mascota: any): void {
+    console.log('Editando mascota:', mascota);
     this.editandoId = mascota.id;
     this.form.patchValue({
       nombre: mascota.nombre,
@@ -121,6 +129,7 @@ export class MascotasComponent implements OnInit {
   }
 
   eliminarMascota(id: number): void {
+    console.log('Eliminando mascota con ID:', id);
     if (!confirm('¿Eliminar esta mascota?')) return;
     this.mascotasService.eliminarMascota(id).subscribe({
       next: () => this.ngZone.run(() => this.cargarMascotas()),
@@ -139,6 +148,7 @@ export class MascotasComponent implements OnInit {
   }
 
   get Nombre()          { return this.form.get('nombre'); }
+  get Id()              { return this.form.get('id'); }
   get Especie()         { return this.form.get('especie'); }
   get Raza()            { return this.form.get('raza'); }
   get Peso()            { return this.form.get('peso'); }

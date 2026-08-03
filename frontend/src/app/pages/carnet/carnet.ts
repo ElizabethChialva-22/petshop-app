@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { VacunaService } from '../../services/vacuna.service';
 
 @Component({
   selector: 'app-carnet',
@@ -31,7 +32,8 @@ export class CarnetComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private cdr: ChangeDetectorRef,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private vacunaService: VacunaService
   ) {
     this.formVacuna = this.fb.group({
       nombre_vacuna: ['', Validators.required],
@@ -47,18 +49,24 @@ export class CarnetComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.mascotaId = +this.route.snapshot.paramMap.get('id')!;
-    this.cargarDatos();
+ ngOnInit(): void {
+  const paramId = this.route.snapshot.paramMap.get('id');
+
+  if (!paramId || isNaN(Number(paramId))) {
+    this.mensaje = 'ID de mascota inválido.';
+    return;
   }
 
+  this.mascotaId = Number(paramId);
+  this.cargarDatos();
+}
   private headers(): HttpHeaders {
     const token = localStorage.getItem('token') ?? '';
     return new HttpHeaders({ Authorization: `Token ${token}` });
   }
 
   cargarDatos(): void {
-    this.http.get<any>(`${this.api}/mascotas/${this.mascotaId}/`, { headers: this.headers() }).subscribe({
+    this.http.get<any>(`${this.api}/mascota/${this.mascotaId}/`, { headers: this.headers() }).subscribe({
       next: (data) => this.ngZone.run(() => { this.mascota = data; this.cdr.markForCheck(); })
     });
 
@@ -70,14 +78,14 @@ export class CarnetComponent implements OnInit {
       next: (data) => this.ngZone.run(() => { this.turnos = data; this.cdr.markForCheck(); })
     });
 
-    this.http.get<any[]>(`${this.api}/vacunas/`, { headers: this.headers() }).subscribe({
+    this.vacunaService.obtenerVacunas().subscribe({
       next: (data) => this.ngZone.run(() => { this.vacunas = data; this.cdr.markForCheck(); })
     });
   }
 
   agregarVacuna(): void {
     if (this.formVacuna.invalid) { this.formVacuna.markAllAsTouched(); return; }
-    const data = { ...this.formVacuna.value, id_mascota: this.mascotaId };
+    const data = { ...this.formVacuna.value, id: this.mascotaId };
     this.http.post(`${this.api}/mascotas/${this.mascotaId}/vacunaciones/`, data, { headers: this.headers() }).subscribe({
       next: () => this.ngZone.run(() => {
         this.mensaje = 'Vacuna registrada.';
@@ -89,16 +97,15 @@ export class CarnetComponent implements OnInit {
     });
   }
 
+
   agregarTurno(): void {
     if (this.formTurno.invalid) { this.formTurno.markAllAsTouched(); return; }
-    const data = { ...this.formTurno.value, id_mascota: this.mascotaId };
+    const data = { ...this.formTurno.value, id: this.mascotaId };
     this.http.post(`${this.api}/mascotas/${this.mascotaId}/turnos/`, data, { headers: this.headers() }).subscribe({
-      next: () => this.ngZone.run(() => {
+      next: () => {
         this.mensaje = 'Turno registrado.';
-        this.formTurno.reset({ estado: 'pendiente' });
-        this.mostrarFormTurno = false;
         this.cargarDatos();
-      }),
+      },
       error: () => this.ngZone.run(() => { this.mensaje = 'Error al registrar turno.'; })
     });
   }
