@@ -1,66 +1,89 @@
-CREATE DATABASE petshop;
-
+CREATE DATABASE IF NOT EXISTS petshop;
 USE petshop;
 
-CREATE TABLE usuario (
-    id_user INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(100) NOT NULL,
-    email VARCHAR(150) NOT NULL,
-    rol VARCHAR(50),
-    telefono VARCHAR(30),
-    direccion VARCHAR(200)
+
+DROP TABLE IF EXISTS api_usuario;
+CREATE TABLE api_usuario (
+                             id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+                             name VARCHAR(100) NOT NULL,
+                             email VARCHAR(254) NOT NULL UNIQUE,
+                             password VARCHAR(128) NOT NULL DEFAULT '',
+                             token VARCHAR(64) UNIQUE NULL,
+                             telefono VARCHAR(20) NULL,
+                             direccion VARCHAR(100) NULL,
+                             role VARCHAR(15) NOT NULL DEFAULT 'cliente'
 );
 
-CREATE TABLE mascota (
-    id_mascota INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(100),
-    especie VARCHAR(50),
-    raza VARCHAR(50),
-    fecha_nacimiento DATE,
-    peso DECIMAL(5,2),
-    id_dueno INT,
-    FOREIGN KEY (id_dueno) REFERENCES usuario(id_user)
+
+DROP TABLE IF EXISTS api_categoria;
+CREATE TABLE api_categoria (
+                               id_categoria INT AUTO_INCREMENT PRIMARY KEY,
+                               nombre VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE vacuna (
-    id_vacuna INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(100),
-    descripcion TEXT,
-    frecuencia VARCHAR(50)
+
+DROP TABLE IF EXISTS api_mascota;
+CREATE TABLE api_mascota (
+                             id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                             nombre VARCHAR(100) NOT NULL,
+                             especie VARCHAR(50) NOT NULL,
+                             raza VARCHAR(50) NOT NULL,
+                             peso INT NOT NULL,
+                             fecha_nacimiento DATE NOT NULL,
+                             id_dueno_id INT NOT NULL,
+                             FOREIGN KEY (id_dueno_id) REFERENCES api_usuario(id_usuario) ON DELETE CASCADE
 );
 
-CREATE TABLE vacunacion (
-    id_vacunacion INT PRIMARY KEY AUTO_INCREMENT,
-    id_mascota INT,
-    id_vacuna INT,
-    fecha_aplicacion DATE,
-    proxima_dosis DATE,
-    veterinario VARCHAR(100),
-    FOREIGN KEY (id_mascota) REFERENCES mascota(id_mascota),
-    FOREIGN KEY (id_vacuna) REFERENCES vacuna(id_vacuna)
+
+DROP TABLE IF EXISTS api_vacuna;
+CREATE TABLE api_vacuna (
+                            id_vacuna INT AUTO_INCREMENT PRIMARY KEY,
+                            nombre VARCHAR(100) NOT NULL,
+                            descripcion LONGTEXT NOT NULL,
+                            frecuencia VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE categoria (
-    id_categoria INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(100)
+
+DROP TABLE IF EXISTS api_vacunacion;
+CREATE TABLE api_vacunacion (
+                                id_vacunacion INT AUTO_INCREMENT PRIMARY KEY,
+                                id_mascota_id INT NOT NULL,
+                                nombre_vacuna VARCHAR(100) NOT NULL,
+                                fecha_aplicacion DATE NOT NULL,
+                                proxima_dosis DATE NULL,
+                                veterinario VARCHAR(100) NOT NULL,
+                                FOREIGN KEY (id_mascota_id) REFERENCES api_mascota(id) ON DELETE CASCADE
 );
 
-CREATE TABLE producto (
-    id_producto INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(100),
-    precio DECIMAL(10,2),
-    stock INT,
-    descripcion TEXT,
-    id_categoria INT,
-    FOREIGN KEY (id_categoria) REFERENCES categoria(id_categoria)
+
+DROP TABLE IF EXISTS api_turno;
+CREATE TABLE api_turno (
+                           id_turno INT AUTO_INCREMENT PRIMARY KEY,
+                           id_mascota_id INT NOT NULL,
+                           fecha DATE NOT NULL,
+                           motivo VARCHAR(200) NOT NULL,
+                           estado VARCHAR(15) NOT NULL,
+                           observaciones LONGTEXT NULL,
+                           FOREIGN KEY (id_mascota_id) REFERENCES api_mascota(id) ON DELETE CASCADE
 );
 
-CREATE TABLE turno (
-    id_turno INT PRIMARY KEY AUTO_INCREMENT,
-    id_mascota INT,
-    fecha DATE,
-    motivo VARCHAR(150),
-    estado VARCHAR(50),
-    observaciones TEXT,
-    FOREIGN KEY (id_mascota) REFERENCES mascota(id_mascota)
+
+DROP TABLE IF EXISTS api_producto;
+CREATE TABLE api_producto (
+                              id_producto INT AUTO_INCREMENT PRIMARY KEY,
+                              nombre VARCHAR(100) NOT NULL,
+                              descripcion LONGTEXT NOT NULL,
+                              precio DECIMAL(10, 2) NOT NULL,
+                              stock INT NOT NULL,
+                              id_categoria_id INT NOT NULL,
+                              imagen VARCHAR(200) NULL,
+                              FOREIGN KEY (id_categoria_id) REFERENCES api_categoria(id_categoria) ON DELETE CASCADE
 );
+
+
+INSERT INTO api_categoria (nombre) VALUES
+                                       ('Alimentos'),
+                                       ('Higiene'),
+                                       ('Juguetes'),
+                                       ('Accesorios'),
+                                       ('Medicamentos');

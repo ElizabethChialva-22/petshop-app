@@ -25,31 +25,31 @@ class UsuarioSerializer(serializers.ModelSerializer):
 class MascotaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Mascota
-        fields = '__all__'
+        fields = ['id', 'nombre', 'especie', 'raza', 'fecha_nacimiento', 'id_dueno','peso']
 
 class TurnoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Turno
-        fields = '__all__'
+        fields = ['id_turno', 'id_mascota', 'fecha', 'motivo', 'estado', 'observaciones']
 
 class VacunaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vacuna
-        fields = '__all__'
+        fields = ['id_vacuna', 'nombre', 'descripcion', 'frecuencia']
 
 class VacunacionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vacunacion
-        fields = '__all__'
+        fields = ['id_vacunacion', 'id_mascota', 'nombre_vacuna', 'fecha_aplicacion', 'proxima_dosis', 'veterinario']
 
 class CategoriaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Categoria
-        fields = '__all__'
+        fields = ['id_categoria', 'nombre']
 
 class ProductoSerializer(serializers.ModelSerializer):
     categoria_nombre = serializers.CharField(source='id_categoria.nombre', read_only=True)
 
     class Meta:
         model  = Producto
-        fields = '__all__'
+        fields = ['id_producto', 'nombre', 'descripcion', 'precio', 'stock', 'id_categoria', 'categoria_nombre']
